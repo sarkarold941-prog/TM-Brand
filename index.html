@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TM BRAND | Oversized Streetwear</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#fff;color:#111}
+header{background:#080808;color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:26px;font-weight:900;letter-spacing:3px}
+header a{color:white;text-decoration:none;margin-left:18px;font-size:13px}
+.hero{background:#171717;color:white;padding:85px 7%;text-align:center}
+.hero h1{font-size:clamp(38px,8vw,75px);letter-spacing:5px}
+.hero p{margin:18px 0;color:#ccc;letter-spacing:2px}
+.btn{display:inline-block;background:white;color:black;padding:14px 28px;text-decoration:none;font-weight:bold;border:0;cursor:pointer;margin-top:15px}
+section{padding:55px 6%}
+.heading{text-align:center;font-size:30px;margin-bottom:35px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}
+.product{border:1px solid #eee;padding-bottom:20px;text-align:center}
+.product img{width:100%;height:290px;object-fit:cover;background:#eee}
+.product h3{margin:15px 0 8px}
+.price{font-weight:bold;font-size:18px}
+.product button{background:#111;color:white;border:0;padding:12px 22px;margin-top:14px;cursor:pointer}
+.product select{padding:9px;margin:8px}
+#cart{background:#f4f4f4}
+.cart-item{padding:12px 0;border-bottom:1px solid #ddd}
+.order{background:#111;color:white;padding:15px 25px;border:0;margin-top:20px;cursor:pointer;font-weight:bold}
+footer{background:#080808;color:white;text-align:center;padding:35px 15px}
+footer p{color:#aaa;margin-top:12px;font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">TM BRAND.</div>
+<nav>
+<a href="#home">HOME</a>
+<a href="#shop">SHOP</a>
+<a href="#cart">CART (<span id="count">0</span>)</a>
+</nav>
+</header>
+
+<div class="hero" id="home">
+<p>NEW COLLECTION 2026</p>
+<h1>WEAR YOUR<br>OWN STYLE.</h1>
+<p>PREMIUM OVERSIZED STREETWEAR</p>
+<a href="#shop" class="btn">SHOP NOW</a>
+</div>
+
+<section id="shop">
+<h2 class="heading">OUR COLLECTION</h2>
+<div class="products">
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600" alt="Black T-shirt">
+<h3>Classic Oversized Tee</h3>
+<p class="price">Rs. 1,499</p>
+<select id="size1">
+<option value="S">Size S</option>
+<option value="M">Size M</option>
+<option value="L">Size L</option>
+<option value="XL">Size XL</option>
+</select><br>
+<button onclick="add('Classic Oversized Tee',1499,'size1')">ADD TO CART</button>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=600" alt="White T-shirt">
+<h3>Essential White Tee</h3>
+<p class="price">Rs. 1,299</p>
+<select id="size2">
+<option value="S">Size S</option>
+<option value="M">Size M</option>
+<option value="L">Size L</option>
+<option value="XL">Size XL</option>
+</select><br>
+<button onclick="add('Essential White Tee',1299,'size2')">ADD TO CART</button>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600" alt="Streetwear T-shirt">
+<h3>Streetwear Graphic Tee</h3>
+<p class="price">Rs. 1,699</p>
+<select id="size3">
+<option value="S">Size S</option>
+<option value="M">Size M</option>
+<option value="L">Size L</option>
+<option value="XL">Size XL</option>
+</select><br>
+<button onclick="add('Streetwear Graphic Tee',1699,'size3')">ADD TO CART</button>
+</div>
+
+</div>
+</section>
+
+<section id="cart">
+<h2 class="heading">YOUR CART</h2>
+<div id="items">Your cart is empty.</div>
+<h3 style="margin-top:20px">Total: Rs. <span id="total">0</span></h3>
+<button class="order" onclick="order()">ORDER ON WHATSAPP</button>
+</section>
+
+<footer>
+<h2>TM BRAND.</h2>
+<p>OVERSIZED STREETWEAR | OWN YOUR STYLE</p>
+<p>© 2026 TM BRAND. ALL RIGHTS RESERVED.</p>
+</footer>
+
+<script>
+let cart=[];
+
+function add(name,price,sizeId){
+let size=document.getElementById(sizeId).value;
+cart.push({name,price,size});
+showCart();
+alert("Product added to cart!");
+}
+
+function showCart(){
+let html="";
+let total=0;
+cart.forEach((item,i)=>{
+total+=item.price;
+html+=`<div class="cart-item">
+${item.name} - Size ${item.size} - Rs. ${item.price}
+<button onclick="removeItem(${i})">Remove</button>
+</div>`;
+});
+document.getElementById("items").innerHTML=html||"Your cart is empty.";
+document.getElementById("total").innerText=total;
+document.getElementById("count").innerText=cart.length;
+}
+
+function removeItem(i){
+cart.splice(i,1);
+showCart();
+}
+
+function order(){
+if(cart.length===0){
+alert("Please add a product first!");
+return;
+}
+let message="Assalamualaikum TM BRAND! I want to place an order:%0A";
+let total=0;
+cart.forEach(item=>{
+message+=`%0A${item.name} - Size ${item.size} - Rs. ${item.price}`;
+total+=item.price;
+});
+message+=`%0A%0ATotal: Rs. ${total}`;
+let phone="923XXXXXXXXX";
+window.open("https://wa.me/"+phone+"?text="+message,"_blank");
+}
+</script>
+</body>
+  </html>
+  
